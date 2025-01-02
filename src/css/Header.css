@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    height: calc(10% - 20px);
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 20px);
+    background-color: #ffde00;
+    padding: 10px;
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-right: 10px;
+}
