@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/App.css";
 import Header from "./Header.jsx";
 import Card from "./Card.jsx";
 import { pokemons } from "./Card.js";
 
-const initData = await pokemons();
-
-const initClicked = new Map();
-initData.forEach((element) => initClicked.set(element.name, false));
-
 function App() {
-	const [data, setData] = useState(initData);
-	const [hashMap, setHashMap] = useState(initClicked);
+	const [initData, setInitData] = useState({array: [], map: new Map()});
+	const [data, setData] = useState([]);
+	const [hashMap, setHashMap] = useState(new Map());
 	const [score, setScore] = useState(0);
 	const [highScore, setHighScore] = useState(0);
 
+	useEffect(() => {
+		async function fetchData() {
+			const initData = await pokemons();
+			const initClicked = new Map();
+			initData.forEach((element) => initClicked.set(element.name, false));
+			setInitData({array: initData, map: initClicked});
+			setData(initData);
+			setHashMap(initClicked);
+		}
+		fetchData();
+	}, []);
+
 	function resetHashMap() {
-		setHashMap(initClicked);
-		setData(initData);
+		setHashMap(initData.map);
+		setData(initData.array);
 		if (score > highScore) setHighScore(score);
 		setScore(0);
 	}
